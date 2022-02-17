@@ -2,8 +2,8 @@
 name = "handlebars_sprig"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = "handlebar template function helpers"
+license-file = "LICENSE.txt"
 
 [dependencies]
 handlebars = {version = "4.1", features = ["dir_source", "script_helper"]}
