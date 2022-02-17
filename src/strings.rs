@@ -1,7 +1,6 @@
 use handlebars::{
     handlebars_helper, Handlebars,
 };
-use chrono::{DateTime, Utc};
 
 pub fn addhelpers(x: &mut Handlebars) {
     handlebars_helper!(upper: |s: String| s.to_uppercase());
@@ -25,13 +24,6 @@ pub fn addhelpers(x: &mut Handlebars) {
         }
     });
     handlebars_helper!(trim: |s:String| s.trim());
-    handlebars_helper!(date_format: |format_string: String, date: DateTime<Utc>| {
-        date.format(format_string.as_str()).to_string()
-    });
-    handlebars_helper!(now: |format_string: String| {
-        let date = Utc::now();
-        date.format(format_string.as_str()).to_string()
-    });
     handlebars_helper!(plural: |count: usize, sing: String, plur: String| if count == 1 {
         sing
     } else {
@@ -67,7 +59,5 @@ pub fn addhelpers(x: &mut Handlebars) {
     x.register_helper("splitn", Box::new(splitn));
     x.register_helper("sort_alpha", Box::new(sort_alpha));
 
-    // Formatting dates: https://docs.rs/chrono/latest/chrono/format/strftime/index.html#specifiers
-    x.register_helper("date_format", Box::new(date_format));
-    x.register_helper("now", Box::new(now));
+   
 }
