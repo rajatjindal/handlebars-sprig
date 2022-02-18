@@ -9,3 +9,4 @@ license-file = "LICENSE.txt"
 handlebars = {version = "4.1", features = ["dir_source", "script_helper"]}
 serde_json = "1.0"
 chrono = {version = "0.4", features = ["serde"]}
+rand = "0.8.5"

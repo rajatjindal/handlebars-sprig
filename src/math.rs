@@ -1,6 +1,5 @@
-use handlebars::{
-    handlebars_helper, Handlebars,
-};
+use handlebars::{handlebars_helper, Handlebars};
+use rand::Rng;
 
 pub fn addhelpers(x: &mut Handlebars) {
     handlebars_helper!(add: |a: isize, b: isize| a + b);
@@ -13,6 +12,7 @@ pub fn addhelpers(x: &mut Handlebars) {
     handlebars_helper!(floor: |a: f64| a.floor());
     handlebars_helper!(ceil: |a: f64| a.ceil());
     handlebars_helper!(round: |a: f64| a.round());
+    handlebars_helper!(randInt:  | | rand::thread_rng().gen::<usize>());
 
     x.register_helper("add", Box::new(add));
     x.register_helper("sub", Box::new(sub));
@@ -23,4 +23,5 @@ pub fn addhelpers(x: &mut Handlebars) {
     x.register_helper("floor", Box::new(floor));
     x.register_helper("ceil", Box::new(ceil));
     x.register_helper("round", Box::new(round));
+    x.register_helper("randInt", Box::new(randInt));
 }
