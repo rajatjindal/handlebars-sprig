@@ -10,3 +10,8 @@ handlebars = {version = "4.1", features = ["dir_source", "script_helper"]}
 serde_json = "1.0"
 chrono = {version = "0.4", features = ["serde"]}
 rand = "0.8.5"
+reqwest = { version = "0.11", features = ["blocking"] }
+wasm-bindgen = "0.2"
+anyhow = "1.0.32"
+serde = { version = "1.0", features = ["derive"] }
+yew = "0.17"
