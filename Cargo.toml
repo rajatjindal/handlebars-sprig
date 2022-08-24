@@ -12,4 +12,4 @@ chrono     = {version = "0.4", features = ["serde"]}
 rand       = "0.8.5"
 http       = "0.2"
 serde      = { version = "1.0", features = ["derive"] }
-spin-sdk   = { git = "https://github.com/fermyon/spin", rev = "232567f2b6c6b6d8145b5a7fdd42452ed69639e6", version = "0.4.0"}
+spin-sdk   = { git = "https://github.com/fermyon/spin", rev = "232567f2b6c6b6d8145b5a7fdd42452ed69639e6", version = "0.0.0"}
