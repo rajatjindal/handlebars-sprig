@@ -1,5 +1,6 @@
 use handlebars::{handlebars_helper, Handlebars};
 use serde::{Deserialize, Serialize};
+use spin_sdk::http as spinhttp;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Publish {
@@ -9,14 +10,18 @@ struct Publish {
 pub fn addhelpers(x: &mut Handlebars) {
     handlebars_helper!(tweet: |user: String, id: String| {
         let url = format!("https://publish.twitter.com/oembed?url=https://twitter.com/{}/status/{}", user, id);
-        let req = http::request::Builder::new().uri(&url).body(None).unwrap();
-        let mut res = wasi_experimental_http::request(req).expect("cannot make get request");
+        let req = http::request::Builder::new().method("GET").uri(&url).body(None).unwrap();
+        let res = spinhttp::send(req).unwrap();
 
         let mut html = "".to_string();
-        if res.status_code == 200 {
-            let str = std::str::from_utf8(&res.body_read_all().unwrap()).unwrap().to_string();
+        let body = res.body().as_ref().map(|bytes| bytes.as_ref());
+        let str = std::str::from_utf8(body.unwrap()).unwrap().to_string();
+
+        if res.status().is_success() {
             let deserialized: Publish = serde_json::from_str(&str).unwrap();
             html = deserialized.html.to_string()
+        } else {
+            html = str
         }
 
         html
