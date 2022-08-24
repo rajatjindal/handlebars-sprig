@@ -1,6 +1,6 @@
 [package]
 name = "handlebars_sprig"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 description = "handlebar template function helpers"
 license-file = "LICENSE.txt"
@@ -8,8 +8,8 @@ license-file = "LICENSE.txt"
 [dependencies]
 handlebars = {version = "4.1", features = ["dir_source", "script_helper"]}
 serde_json = "1.0"
-chrono = {version = "0.4", features = ["serde"]}
-rand = "0.8.5"
-http                   = "0.2"
-wasi-experimental-http = "0.7.0"
-serde = { version = "1.0", features = ["derive"] }
+chrono     = {version = "0.4", features = ["serde"]}
+rand       = "0.8.5"
+http       = "0.2"
+serde      = { version = "1.0", features = ["derive"] }
+spin-sdk   = { git = "https://github.com/fermyon/spin", rev = "232567f2b6c6b6d8145b5a7fdd42452ed69639e6", version = "0.4.0"}
