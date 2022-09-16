@@ -15,5 +15,8 @@ fn main() {
 
     // Example of running a template render.
     let empty_context: Vec<String> = vec![];
-    println!("Template produced: {}", hbs.render_template(tpl, &empty_context).unwrap())
+    println!(
+        "Template produced: {}",
+        hbs.render_template(tpl, &empty_context).unwrap()
+    )
 }

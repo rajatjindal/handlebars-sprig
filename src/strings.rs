@@ -3,6 +3,13 @@ use handlebars::{handlebars_helper, Handlebars};
 pub fn addhelpers(x: &mut Handlebars) {
     handlebars_helper!(upper: |s: String| s.to_uppercase());
     handlebars_helper!(lower: |s: String| s.to_lowercase());
+    handlebars_helper!(title: |s: String| {
+        let mut c = s.chars();
+        match c.next() {
+            None => String::new(),
+            Some(f) => f.to_uppercase().chain(c).collect(),
+        }
+    });
     handlebars_helper!(trunc: |l: usize, s: String| {
         let mut data = s.clone();
         data.truncate(l);
@@ -20,6 +27,20 @@ pub fn addhelpers(x: &mut Handlebars) {
             data.truncate(l);
             format!("{}...", data)
         }
+    });
+    handlebars_helper!(abbrevboth: |l: usize, max: usize, s: String| {
+        let abbr;
+        if l > s.len() - 2 {
+            abbr = &s[s.len() - 2..];
+        } else {
+            let limit = l + max;
+            if limit < s.len() -2 {
+                abbr = &s[l..limit];
+            } else {
+                abbr = &s[l..];
+            }
+        }
+        format!("{}...", abbr)
     });
     handlebars_helper!(trim: |s:String| s.trim());
     handlebars_helper!(plural: |count: usize, sing: String, plur: String| if count == 1 {
@@ -77,11 +98,21 @@ pub fn addhelpers(x: &mut Handlebars) {
 
         result
     });
+    handlebars_helper!(repeat: |count: usize, s: String| s.repeat(count));
+    handlebars_helper!(other_substr: |start: usize, end: usize, s: String| &s[start..end]);
+    handlebars_helper!(nospace: |s: String| s.replace(" ", ""));
+    handlebars_helper!(initials: |s: String| {
+            let initial: String = s.split(" ")
+            .flat_map(|s| s.chars().nth(0)).collect();
+            initial.to_uppercase()
+    });
 
     x.register_helper("upper", Box::new(upper));
     x.register_helper("lower", Box::new(lower));
+    x.register_helper("title", Box::new(title));
     x.register_helper("trunc", Box::new(trunc));
     x.register_helper("abbrev", Box::new(abbrev));
+    x.register_helper("abbrevboth", Box::new(abbrevboth));
     x.register_helper("plural", Box::new(plural));
     x.register_helper("trim", Box::new(trim));
     x.register_helper("join", Box::new(join));
@@ -91,4 +122,8 @@ pub fn addhelpers(x: &mut Handlebars) {
     x.register_helper("trim_suffix", Box::new(trim_suffix));
     x.register_helper("trim_prefix", Box::new(trim_prefix));
     x.register_helper("trim_all", Box::new(trim_all));
+    x.register_helper("repeat", Box::new(repeat));
+    x.register_helper("substr", Box::new(other_substr));
+    x.register_helper("nospace", Box::new(nospace));
+    x.register_helper("initials", Box::new(initials));
 }
